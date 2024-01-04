@@ -35,7 +35,7 @@ const userSchema = new Schema ({
     avatar: Buffer,
     accounts: {
         type: [accountSchema],
-        default: [{ _id: '260627062003200315265252', accountName: 'Cash', accountType: 'cash', count: 0, deleted: false }]
+        default: [{ _id: process.env.ENCRYPTEDID, accountName: 'Cash', accountType: 'cash', count: 0 }]
     },
     contributions: [contributionSchema],
     investments: [investmentSchema],

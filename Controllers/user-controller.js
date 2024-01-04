@@ -91,7 +91,7 @@ class UserController {
             const { id } = req.params
             const { account } = req.body
 
-            !id ? res.status(400).json({ message: 'Invalid id'}) : null
+            !id ? res.status(400).json({ message: 'Invalid id' }) : null
 
             const userData = await UserService.modifiedAccount(id, account)
 

@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 
 const PORT = process.env.PORT || 5000
-const IP = '192.168.1.64'
+const IP = '192.168.1.66'
 
 const dotenv = require('dotenv')
 dotenv.config()

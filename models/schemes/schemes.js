@@ -21,8 +21,7 @@ const categorySchema = new Schema({
 const accountSchema = new Schema({
     accountName: { type: String, required: true },
     accountType: { type: String, required: true },
-    count: { type: Number, required: true },
-    deleted: { type: Boolean, required: true }
+    count: { type: Number, required: true }
 })
 
 const contributionSchema = new Schema({

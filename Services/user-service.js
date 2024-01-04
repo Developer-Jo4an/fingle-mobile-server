@@ -5,7 +5,6 @@ const { models } = require('../models/schemes/schemes')
 const { Purpose, Account, Contribution, Investment, Debt, Transaction, Category } = models
 const User = require('../models/user')
 const { ErrorServiceHandler } = require('../error-handlers/error-handlers')
-const {add} = require('nodemon/lib/rules');
 
 class UserService {
     async getUserInfo (id) {
@@ -64,12 +63,12 @@ class UserService {
                 typeof account.accountName === 'string'
                 && account.accountName.length >= 1 && account.accountName.length <= 30
                 && typeof account.count === 'number'
-                && account.count !== 'NaN'
+                && account.count != 'NaN'
                 && (account.accountType === 'cash' || account.accountType === 'card')
             ) {
                 const userData = await User.findByIdAndUpdate(
                     { _id: new ObjectId(id) },
-                    { $push: { accounts: {...account, deleted: true } } },
+                    { $push: { accounts: account } },
                     { new: true, projection: { accounts: 1 } }
                 )
                 const { accounts } = userData
@@ -134,7 +133,7 @@ class UserService {
 
     async deleteAccount(id, accountId) {
         try {
-            if (accountId === '260627062003200315265252') throw new Error('This account cannot be deleted!')
+            if (accountId === process.env.ENCRYPTEDID && this !== 'agree') throw new Error('This account cannot be deleted!')
 
             const userData = await User.findOneAndUpdate(
                 { _id: new ObjectId(id) },
@@ -145,7 +144,7 @@ class UserService {
                 }
             )
 
-            const checker = () => Array.isArray(userData.accounts) && userData.accounts.length > 0
+            const checker = () => Array.isArray(userData.accounts)
 
             if ( checker() ) return { status: true, accounts: userData.accounts }
             else throw new Error('Checker was not passed (server)')
@@ -157,7 +156,7 @@ class UserService {
         try {
             const { _id } = account
 
-            const delResult = await this.deleteAccount(id, _id)
+            const delResult = await this.deleteAccount.bind(_id === process.env.ENCRYPTEDID ? 'agree' : 'no-agree')(id, _id)
             const addResult = await this.addAccount(id, account)
 
             if (delResult.status && addResult.status) {
