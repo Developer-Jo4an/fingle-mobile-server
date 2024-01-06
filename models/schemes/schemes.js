@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-
 const Schema = mongoose.Schema
 
 const categorySchema = new Schema({
@@ -24,33 +23,15 @@ const accountSchema = new Schema({
     count: { type: Number, required: true }
 })
 
-const contributionSchema = new Schema({
-    img: { type: String, required: true },
-    count: { type: Number, required: true },
-    percent: { type: Number, required: true },
-    bankName: { type: String, required: true },
-    contributionType: { type: String, required: true },
-})
-
-const investmentSchema = new Schema({
-    img: { type: String, required: true },
-    count: { type: Number, required: true },
-    companyName: { type:String, required:true }
-})
-
-const debtSchema = new Schema({
-    img: { type : String, required:true },
-    debtTarget: { type : String, required:true },
-    debtType: { type : String, required:true },
-    progress: { type : [Number], required:true },
-    deadLine: { type : Date, required:true }
-})
-
-const purposeSchema = new Schema ({
-    img: { type : String, required:true },
-    progress: { type : [Number], required:true },
-    purposeName: { type : String, required:true },
-    deadLine: { type : Date, required:true }
+const budgetSchema = new Schema({
+	budgetName: { type: String, required: true },
+	count: { type: Number, required: true },
+	budgetInterval: { type: [Date, Date], required: true },
+	budgetSelectedCategories: { type: [categorySchema], required: true },
+	budgetSign: {
+		budgetSignColor: String,
+		budgetSign: String
+	}
 })
 
 const transactionSchema = new Schema ({
@@ -97,34 +78,25 @@ const storiesSchema = new Schema({
     background: Buffer
 })
 
-const Purpose = new mongoose.model('Purpose', purposeSchema)
 const Account = new mongoose.model('Card', accountSchema)
-const Contribution = new mongoose.model('Contribution', contributionSchema)
-const Investment = new mongoose.model('Investment', investmentSchema)
-const Debt = new mongoose.model('Debt', debtSchema)
 const Transaction = new mongoose.model('Transaction', transactionSchema)
 const Category = new mongoose.model('Category', categorySchema)
 const Story = new mongoose.model('Story', storiesSchema)
+const Budget = new mongoose.model('Budget', budgetSchema)
 
 module.exports = {
     schemes: {
     categorySchema,
     accountSchema,
-    contributionSchema,
-    investmentSchema,
-    debtSchema,
-    purposeSchema,
     transactionSchema,
-    storiesSchema
+    storiesSchema,
+	budgetSchema
     },
     models: {
-        Purpose,
         Account,
-        Contribution,
-        Investment,
-        Debt,
         Transaction,
         Category,
-        Story
+        Story,
+	    Budget
     }
 }

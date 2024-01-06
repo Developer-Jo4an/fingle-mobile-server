@@ -1,16 +1,13 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const { schemes } = require('./schemes/schemes')
+// schemes
 const {
     categorySchema,
     accountSchema,
-    contributionSchema,
-    investmentSchema,
-    debtSchema,
-    purposeSchema,
-    transactionSchema} = schemes
-// schemes
-
+    transactionSchema,
+	budgetSchema
+} = schemes
 
 // user Schema
 const userSchema = new Schema ({
@@ -37,14 +34,11 @@ const userSchema = new Schema ({
         type: [accountSchema],
         default: [{ _id: process.env.ENCRYPTEDID, accountName: 'Cash', accountType: 'cash', count: 0 }]
     },
-    contributions: [contributionSchema],
-    investments: [investmentSchema],
     subscriptionLevel: {
         type: String,
         default: 'Standard'
     },
-    debts: [debtSchema],
-    purposes: [purposeSchema],
+	budgets: [budgetSchema],
     transactions: [transactionSchema],
     transactionCategories: {
         expense: {
