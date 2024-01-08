@@ -30,7 +30,7 @@ const budgetSchema = new Schema({
 	budgetSelectedCategories: { type: [categorySchema], required: true },
 	budgetSign: {
 		budgetSignColor: String,
-		budgetSign: String
+		budgetSignIcon: String
 	}
 })
 
